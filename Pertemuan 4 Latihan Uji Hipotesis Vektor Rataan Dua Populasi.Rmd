@@ -1,0 +1,153 @@
+---
+title: "Tugas 2 Uji Vektor Rataan 2 Populasi"
+author: "Alden Nabil Wibowo Effendy"
+format: html
+editor: visual
+---
+
+# Latihan Uji Vektor Rataan 2 Populasi
+
+Studi kasus perbandingan IQ dan rata-rata nilai rapor untuk Sekolah Menengah Pertana (SMP) negeri dan swasta. Dinas Pendidikan Jawa Barat ingin mengetahui apakah ada perbedaan IQ dan rata-rata nilai rapor pada sekolah negeri dan swasta
+
+A: Sekolah Negeri
+
+B: Sekolah Swasta
+
+IQ: Skor IQ
+
+Rata: Rata-rata nilai rapor. Akan diuji dengan hipotesis sebagai berikut.
+
+$H0:μA=μB$
+
+$H1:μA≠μB$
+
+Diketahui kedua vektor nilai tengah saling bebas dan ragam sama
+
+```{r}
+library(MASS)
+set.seed(1088)
+n_negeri <- 20
+n_swasta <- 20
+
+# Nilai IQ dan rata-rata nilai rapor
+mu_swasta <- c(105, 90)
+Sigma <- matrix(c(30, 5, 5, 30), 2) # Matriks ragam yang dibuat sama
+data_swasta <- mvrnorm(n_swasta, mu = mu_swasta, Sigma = Sigma)
+
+# Nilai IQ dan rata-rata nilai rapor
+mu_negeri <- c(90, 75)
+data_negeri <- mvrnorm(n_negeri, mu = mu_negeri, Sigma = Sigma)
+
+# Gabungkan menjadi satu data frame
+data2 <- data.frame(
+  IQ_negeri = data_swasta[,1],
+  rata_negeri = data_swasta[,2],
+  IQ_swasta = data_negeri[,1],
+  rata_swasta = data_negeri[,2]
+)
+data2
+```
+
+## **Menghitung vektor rataan dan matriks covarians**
+
+```{r}
+# Memisahkan Data dari Populasi 1 dan 2
+data_negeri = data2[,1:2]
+data_swasta = data2[,3:4]
+data_negeri
+```
+
+```{r}
+xbar1 = apply(data_negeri, 2, mean)
+xbar1
+```
+
+```{r}
+xbar2 = apply(data_swasta, 2, mean)
+xbar2
+```
+
+```{r}
+cov_m1 = cov(data_negeri)
+cov_m1
+```
+
+```{r}
+cov_m2 = cov(data_swasta)
+cov_m2
+```
+
+```{r}
+n1 = nrow(data_negeri)
+n2 = nrow(data_swasta)
+
+# S Gabungan
+s_gab = ((n1-1)*cov_m1+(n2-1)*cov_m2)/(n1+n2-2)
+s_gab
+```
+
+## **Uji T2 Hotelling Dua Populasi Sampel S**aling Bebas Ragam Sama
+
+```{r}
+library(Hotelling)
+
+t2_homogen = hotelling.test(data_negeri,data_swasta,var.equal=TRUE)
+t2_homogen
+```
+
+Diperoleh p value sebesar $2.081e-13$ yang berarti perbedaan kedua populasi signifikan
+
+## **Selang Kepercayaan Simultan**
+
+```{r}
+T.ci = function(mu1, mu2, S_gab, n1, n2, avec=rep(1,length(mu)), level=0.95){
+p = length(mu1)
+mu = mu1-mu2
+cval = qf(level, p, n1+n2-p-1) * p * (n1+n2-2) / (n1+n2-p-1)
+zhat = crossprod(avec, mu)
+zvar = crossprod(avec, S_gab %*% avec)* (1/n1+1/n2)
+const = sqrt(cval * zvar)
+c(lower = zhat - const, upper = zhat + const)
+}
+```
+
+```{r}
+#negeri
+T.ci(xbar1, xbar2, s_gab, n1,n2, avec=c(1,0),level=0.95)
+```
+
+```{r}
+#swasta
+T.ci(xbar1, xbar2, s_gab, n1,n2, avec=c(0,1),level=0.95)
+```
+
+## **Selang Kepercayaan Bonferroni**
+
+```{r}
+bon = function(mu1, mu2 ,S, n1, n2, alpha, k){
+ p = length(mu1)
+ mu = mu1-mu2
+ lower = mu[k] - sqrt((S[k,k]) *(1/n1+1/n2))* abs(qt(alpha/(2*p), df=n1+n2-2))
+ upper = mu[k] + sqrt((S[k,k]) *(1/n1+1/n2))* abs(qt(alpha/(2*p), df=n1+n2-2))
+ ci = c(lower = lower,upper = upper)
+ names(ci)= c("lower","upper")
+ ci
+}
+```
+
+```{r}
+#negeri
+bon(xbar1, xbar2, s_gab, n1, n2,0.05,1)
+```
+
+```{r}
+#swasta
+bon(xbar1, xbar2, s_gab, n1, n2,0.05,2)
+```
+
+## Kesimpulan
+
+Berdasarkan uji T2 Hotelling dua populasi dengan nilai tengah bebas dan dan ragam sama. Diperoleh kesimpulan bahwa $p-value$ \<0.05, sehingga **tolak** $H_0$ pada taraf nyata 5%.
+
+1.  Nilai IQ dan rata-rata nilai rapor dari siswa negeri dan swasta secara simultan berbeda signifikan. Terdapat perbedaan antara siswa negeri dan swasta
+2.  IQ dan Rata-rata nilai rapor siswa swasta lebih tinggi dibanding siswa negeri. Terbukti secara statistik pada selang 5% bahwa siswa yang bersekolah di SMP swasta lebih pintar daripada siswa yang bersekolah di SMP negeri
