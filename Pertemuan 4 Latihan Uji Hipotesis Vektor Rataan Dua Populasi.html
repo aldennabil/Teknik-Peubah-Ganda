@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Alden Nabil Wibowo Effendy">
+
+<title>Tugas 2 Uji Vektor Rataan 2 Populasi</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="Pertemuan 4 Latihan Uji Hipotesis Vektor Rataan Dua Populasi_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Pertemuan 4 Latihan Uji Hipotesis Vektor Rataan Dua Populasi_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="Pertemuan 4 Latihan Uji Hipotesis Vektor Rataan Dua Populasi_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="Pertemuan 4 Latihan Uji Hipotesis Vektor Rataan Dua Populasi_files/libs/quarto-html/popper.min.js"></script>
+<script src="Pertemuan 4 Latihan Uji Hipotesis Vektor Rataan Dua Populasi_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Pertemuan 4 Latihan Uji Hipotesis Vektor Rataan Dua Populasi_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Pertemuan 4 Latihan Uji Hipotesis Vektor Rataan Dua Populasi_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Pertemuan 4 Latihan Uji Hipotesis Vektor Rataan Dua Populasi_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Pertemuan 4 Latihan Uji Hipotesis Vektor Rataan Dua Populasi_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Pertemuan 4 Latihan Uji Hipotesis Vektor Rataan Dua Populasi_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Pertemuan 4 Latihan Uji Hipotesis Vektor Rataan Dua Populasi_files/libs/bootstrap/bootstrap-bb462d781dde1847d9e3ccf7736099dd.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Tugas 2 Uji Vektor Rataan 2 Populasi</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Alden Nabil Wibowo Effendy </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="latihan" class="level1">
+<h1>Latihan</h1>
+</section>
+<section id="perbandingan-dua-vektor-nilai-tengah-sampel-berpasangan" class="level1">
+<h1><strong>2. Perbandingan Dua Vektor Nilai Tengah Sampel Berpasangan</strong></h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1088</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>n_smp <span class="ot">&lt;-</span> <span class="dv">20</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>n_madr <span class="ot">&lt;-</span> <span class="dv">20</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Nilai IPA dan IPS SMP: Misalnya rata-rata lebih rendah</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>mu_smp <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">60</span>, <span class="dv">65</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>Sigma <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">200</span>, <span class="dv">50</span>, <span class="dv">50</span>, <span class="dv">180</span>), <span class="dv">2</span>) <span class="co"># Matriks kovariansi diasumsikan sama</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>data_smp <span class="ot">&lt;-</span> <span class="fu">mvrnorm</span>(n_smp, <span class="at">mu =</span> mu_smp, <span class="at">Sigma =</span> Sigma)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Nilai IPA dan IPS MA: Misalnya rata-rata lebih tinggi</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>mu_madr <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">75</span>, <span class="dv">85</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>data_madr <span class="ot">&lt;-</span> <span class="fu">mvrnorm</span>(n_madr, <span class="at">mu =</span> mu_madr, <span class="at">Sigma =</span> Sigma)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Gabungkan menjadi satu data frame</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">Sekolah =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"SMP"</span>, <span class="st">"Madrasah"</span>), <span class="at">each =</span> <span class="dv">20</span>),</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">IPA =</span> <span class="fu">c</span>(data_smp[,<span class="dv">1</span>], data_madr[,<span class="dv">1</span>]),</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">IPS =</span> <span class="fu">c</span>(data_smp[,<span class="dv">2</span>], data_madr[,<span class="dv">2</span>])</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Sekolah      IPA       IPS
+1       SMP 55.06996  60.93164
+2       SMP 38.45755  54.07110
+3       SMP 44.70336  73.54104
+4       SMP 74.15735  69.66250
+5       SMP 51.37083  56.28789
+6       SMP 47.02438  45.90668
+7       SMP 60.02200  60.41567
+8       SMP 63.91009  84.42468
+9       SMP 69.36961  79.98162
+10      SMP 68.62485  58.04422
+11      SMP 63.45596  64.68837
+12      SMP 60.07458  75.66675
+13      SMP 57.52221  62.36780
+14      SMP 71.45875  96.98426
+15      SMP 48.22104  81.97944
+16      SMP 74.62346  40.07261
+17      SMP 46.01448  39.04246
+18      SMP 64.43059  58.15406
+19      SMP 56.56397  74.13963
+20      SMP 47.69171  81.45182
+21 Madrasah 63.63353  83.54784
+22 Madrasah 88.50097  76.40247
+23 Madrasah 87.09908  83.26927
+24 Madrasah 49.27682  83.60690
+25 Madrasah 50.71777  76.98616
+26 Madrasah 41.01848  73.87080
+27 Madrasah 85.41207  77.08238
+28 Madrasah 61.24986  85.61098
+29 Madrasah 69.69250 103.76717
+30 Madrasah 71.57582 106.86082
+31 Madrasah 81.09799  83.92220
+32 Madrasah 90.75655  84.91313
+33 Madrasah 78.27753  93.96404
+34 Madrasah 76.24069 101.33219
+35 Madrasah 65.17538  92.46639
+36 Madrasah 81.45659  77.13142
+37 Madrasah 48.26365  80.28776
+38 Madrasah 65.70321  72.66282
+39 Madrasah 68.96394  81.66250
+40 Madrasah 71.37269  82.19908</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pisahkan data berdasarkan kelompok</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>group_smp <span class="ot">&lt;-</span> <span class="fu">subset</span>(data, Sekolah <span class="sc">==</span> <span class="st">"SMP"</span>, <span class="at">select =</span> <span class="fu">c</span>(IPA, IPS))</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>group_smp </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        IPA      IPS
+1  55.06996 60.93164
+2  38.45755 54.07110
+3  44.70336 73.54104
+4  74.15735 69.66250
+5  51.37083 56.28789
+6  47.02438 45.90668
+7  60.02200 60.41567
+8  63.91009 84.42468
+9  69.36961 79.98162
+10 68.62485 58.04422
+11 63.45596 64.68837
+12 60.07458 75.66675
+13 57.52221 62.36780
+14 71.45875 96.98426
+15 48.22104 81.97944
+16 74.62346 40.07261
+17 46.01448 39.04246
+18 64.43059 58.15406
+19 56.56397 74.13963
+20 47.69171 81.45182</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>group_madr <span class="ot">&lt;-</span> <span class="fu">subset</span>(data, Sekolah <span class="sc">==</span> <span class="st">"Madrasah"</span>, <span class="at">select =</span> <span class="fu">c</span>(IPA, IPS))</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>group_madr </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        IPA       IPS
+21 63.63353  83.54784
+22 88.50097  76.40247
+23 87.09908  83.26927
+24 49.27682  83.60690
+25 50.71777  76.98616
+26 41.01848  73.87080
+27 85.41207  77.08238
+28 61.24986  85.61098
+29 69.69250 103.76717
+30 71.57582 106.86082
+31 81.09799  83.92220
+32 90.75655  84.91313
+33 78.27753  93.96404
+34 76.24069 101.33219
+35 65.17538  92.46639
+36 81.45659  77.13142
+37 48.26365  80.28776
+38 65.70321  72.66282
+39 68.96394  81.66250
+40 71.37269  82.19908</code></pre>
+</div>
+</div>
+<section id="menghitung-selisih-smp-dan-ma" class="level2">
+<h2 class="anchored" data-anchor-id="menghitung-selisih-smp-dan-ma"><strong>Menghitung Selisih SMP dan MA</strong></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>d_mapelsmp <span class="ot">=</span> group_smp[,<span class="dv">1</span>]<span class="sc">-</span>group_smp[,<span class="dv">2</span>]</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>d_mapelmadr <span class="ot">=</span> group_madr[,<span class="dv">1</span>]<span class="sc">-</span>group_madr[,<span class="dv">2</span>]</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>X <span class="ot">=</span> <span class="fu">data.frame</span>(d_mapelsmp,d_mapelmadr)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>X</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    d_mapelsmp d_mapelmadr
+1   -5.8616783  -19.914306
+2  -15.6135473   12.098498
+3  -28.8376762    3.829812
+4    4.4948426  -34.330073
+5   -4.9170619  -26.268383
+6    1.1176993  -32.852319
+7   -0.3936689    8.329695
+8  -20.5145969  -24.361115
+9  -10.6120106  -34.074677
+10  10.5806299  -35.284997
+11  -1.2324118   -2.824205
+12 -15.5921646    5.843417
+13  -4.8455882  -15.686515
+14 -25.5255099  -25.091500
+15 -33.7583988  -27.291006
+16  34.5508540    4.325170
+17   6.9720196  -32.024109
+18   6.2765324   -6.959602
+19 -17.5756600  -12.698564
+20 -33.7601114  -10.826390</code></pre>
+</div>
+</div>
+</section>
+<section id="menghitung-vektor-rataan-dan-matriks-covarians" class="level2">
+<h2 class="anchored" data-anchor-id="menghitung-vektor-rataan-dan-matriks-covarians">Menghitung vektor rataan dan matriks covarians</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>xbar <span class="ot">=</span> <span class="fu">apply</span>(X, <span class="dv">2</span>, mean)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>xbar</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> d_mapelsmp d_mapelmadr 
+  -7.752375  -15.303058 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>cov_m <span class="ot">=</span> <span class="fu">cov</span>(X)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>cov_m</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            d_mapelsmp d_mapelmadr
+d_mapelsmp  283.614496   -5.847994
+d_mapelmadr  -5.847994  259.183663</code></pre>
+</div>
+</div>
+</section>
+<section id="uji-t2-hotelling-dua-populasi-sampel-berpasangan" class="level2">
+<h2 class="anchored" data-anchor-id="uji-t2-hotelling-dua-populasi-sampel-berpasangan">Uji T2 Hotelling Dua Populasi Sampel Berpasangan</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MVTests)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'MVTests'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:datasets':
+
+    iris</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>mean0 <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>result <span class="ot">=</span> <span class="fu">OneSampleHT2</span>(X,<span class="at">mu0=</span>mean0,<span class="at">alpha=</span><span class="fl">0.05</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       One Sample Hotelling T Square Test 
+
+Hotelling T Sqaure Statistic = 22.69704 
+ F value = 10.751 , df1 = 2 , df2 = 18 , p-value: 0.000847 
+
+                  Descriptive Statistics
+
+      d_mapelsmp d_mapelmadr
+N      20.000000    20.00000
+Means  -7.752375   -15.30306
+Sd     16.840858    16.09918
+
+
+                Detection important variable(s)
+
+                Lower     Upper Mu0 Important Variables?
+d_mapelsmp  -18.06805  2.563296   0                FALSE
+d_mapelmadr -25.16443 -5.441692   0               *TRUE*</code></pre>
+</div>
+</div>
+</section>
+<section id="selang-kepercayaan-simultan" class="level2">
+<h2 class="anchored" data-anchor-id="selang-kepercayaan-simultan">Selang Kepercayaan Simultan</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>result<span class="sc">$</span>CI</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                Lower     Upper Mu0 Important Variables?
+d_mapelsmp  -18.06805  2.563296   0                FALSE
+d_mapelmadr -25.16443 -5.441692   0               *TRUE*</code></pre>
+</div>
+</div>
+</section>
+<section id="selang-kepercayaan-bonferroni" class="level2">
+<h2 class="anchored" data-anchor-id="selang-kepercayaan-bonferroni">Selang Kepercayaan Bonferroni</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>bon <span class="ot">=</span> <span class="cf">function</span>(mu,S,n,alpha,k){</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a> p <span class="ot">=</span> <span class="fu">length</span>(mu)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a> lower <span class="ot">=</span> mu[k] <span class="sc">-</span> <span class="fu">sqrt</span>(S[k,k]<span class="sc">/</span>n) <span class="sc">*</span> <span class="fu">abs</span>(<span class="fu">qt</span>(alpha<span class="sc">/</span>(<span class="dv">2</span><span class="sc">*</span>p), <span class="at">df=</span>n<span class="dv">-1</span>))</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a> upper <span class="ot">=</span> mu[k] <span class="sc">+</span> <span class="fu">sqrt</span>(S[k,k]<span class="sc">/</span>n) <span class="sc">*</span> <span class="fu">abs</span>(<span class="fu">qt</span>(alpha<span class="sc">/</span>(<span class="dv">2</span><span class="sc">*</span>p), <span class="at">df=</span>n<span class="dv">-1</span>))</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a> <span class="fu">c</span>(<span class="at">lower =</span> lower,<span class="at">upper =</span> upper)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>n <span class="ot">=</span> <span class="fu">nrow</span>(X)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Kata</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">bon</span>(xbar, cov_m,n,<span class="fl">0.05</span>,<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>lower.d_mapelsmp upper.d_mapelsmp 
+      -16.916055         1.411304 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Kata Kerja</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">bon</span>(xbar, cov_m,n,<span class="fl">0.05</span>,<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>lower.d_mapelmadr upper.d_mapelmadr 
+        -24.06317          -6.54295 </code></pre>
+</div>
+</div>
+</section>
+<section id="kesimpulan" class="level2">
+<h2 class="anchored" data-anchor-id="kesimpulan">Kesimpulan</h2>
+<p>Berdasarkan uji T2 Hotelling dua populasi dengan nilai tengah berpasangandan dan ragam tidak sama. Diperoleh kesimpulan bahwa</p>
+<ol type="1">
+<li>Nilai IPA dan IPS dari siswa SMP tidak berbeda signifikan</li>
+<li>Nilai IPA dan IPS dari siswa SMP tidak berbeda signifikan</li>
+</ol>
+</section>
+</section>
+<section id="perbandingan-dua-vektor-nilai-tengah-sampel-saling-bebas-ragam-sama" class="level1">
+<h1>3. Perbandingan Dua Vektor Nilai Tengah Sampel Saling Bebas Ragam Sama</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1088</span>)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>n_negeri <span class="ot">&lt;-</span> <span class="dv">20</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>n_swasta <span class="ot">&lt;-</span> <span class="dv">20</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Nilai IQ dan rata-rata nilai rapor</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>mu_swasta <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">120</span>, <span class="dv">90</span>)</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>Sigma <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">200</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">200</span>), <span class="dv">2</span>) <span class="co"># Matriks ragam peragam diasumsikan sama</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>data_swasta <span class="ot">&lt;-</span> <span class="fu">mvrnorm</span>(n_swasta, <span class="at">mu =</span> mu_swasta, <span class="at">Sigma =</span> Sigma)</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Nilai IQ dan rata-rata nilai rapor</span></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>mu_negeri <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">80</span>, <span class="dv">75</span>)</span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>data_negeri <span class="ot">&lt;-</span> <span class="fu">mvrnorm</span>(n_negeri, <span class="at">mu =</span> mu_negeri, <span class="at">Sigma =</span> Sigma)</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Gabungkan menjadi satu data frame</span></span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>data2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">IQ_negeri =</span> data_swasta[,<span class="dv">1</span>],</span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">rata_negeri =</span> data_swasta[,<span class="dv">2</span>],</span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">IQ_swasta =</span> data_negeri[,<span class="dv">1</span>],</span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">rata_swasta =</span> data_negeri[,<span class="dv">2</span>]</span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>data2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   IQ_negeri rata_negeri IQ_swasta rata_swasta
+1  119.97524    95.82299  87.29666    83.84650
+2  126.24435   111.48896  61.75798    70.45402
+3  139.55514    95.84367  69.19375    67.47568
+4  113.55894    77.33314  98.26908    93.92683
+5  118.48069   101.11110  91.03186    96.73554
+6  112.15629   110.16899  95.51792   105.36809
+7  115.73081    92.63223  64.73764    72.23749
+8  135.04502    76.02639  91.02312    84.33423
+9  126.77188    74.74624 101.44468    67.90002
+10 106.98895    87.94109 102.88218    64.78643
+11 117.08283    87.74522  74.36297    71.32640
+12 129.83783    83.78677  67.93726    63.94953
+13 119.44260    93.26588  85.82269    67.51368
+14 140.95495    63.45438  94.20636    64.69311
+15 144.70762    88.49175  94.39706    77.60925
+16  85.75668    94.09469  67.79110    74.99584
+17 106.55698   114.84497  95.96070    96.55762
+18 110.28039    90.83255  75.62574    88.67514
+19 131.09093    87.14204  81.49427    81.18007
+20 144.62073    89.16940  80.16026    79.17317</code></pre>
+</div>
+</div>
+<section id="menghitung-vektor-rataan-dan-matriks-covarians-1" class="level2">
+<h2 class="anchored" data-anchor-id="menghitung-vektor-rataan-dan-matriks-covarians-1"><strong>Menghitung vektor rataan dan matriks covarians</strong></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Memisahkan Data dari Populasi 1 dan 2</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>data_iq <span class="ot">=</span> data2[,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>data_rata <span class="ot">=</span> data2[,<span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>]</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>data_rata</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   IQ_swasta rata_swasta
+1   87.29666    83.84650
+2   61.75798    70.45402
+3   69.19375    67.47568
+4   98.26908    93.92683
+5   91.03186    96.73554
+6   95.51792   105.36809
+7   64.73764    72.23749
+8   91.02312    84.33423
+9  101.44468    67.90002
+10 102.88218    64.78643
+11  74.36297    71.32640
+12  67.93726    63.94953
+13  85.82269    67.51368
+14  94.20636    64.69311
+15  94.39706    77.60925
+16  67.79110    74.99584
+17  95.96070    96.55762
+18  75.62574    88.67514
+19  81.49427    81.18007
+20  80.16026    79.17317</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>xbar1 <span class="ot">=</span> <span class="fu">apply</span>(data_iq, <span class="dv">2</span>, mean)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>xbar1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  IQ_negeri rata_negeri 
+  122.24194    90.79712 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>xbar2 <span class="ot">=</span> <span class="fu">apply</span>(data_rata, <span class="dv">2</span>, mean)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>xbar2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  IQ_swasta rata_swasta 
+   84.04566    78.63693 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>cov_m1 <span class="ot">=</span> <span class="fu">cov</span>(data_iq)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>cov_m1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            IQ_negeri rata_negeri
+IQ_negeri   222.00386   -71.74954
+rata_negeri -71.74954   160.62174</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>cov_m2 <span class="ot">=</span> <span class="fu">cov</span>(data_rata)</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>cov_m2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            IQ_swasta rata_swasta
+IQ_swasta   171.32124    55.06202
+rata_swasta  55.06202   152.91599</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>n1 <span class="ot">=</span> <span class="fu">nrow</span>(data_iq)</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>n2 <span class="ot">=</span> <span class="fu">nrow</span>(data_rata)</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="co"># S Gabungan</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>s_gab <span class="ot">=</span> ((n1<span class="dv">-1</span>)<span class="sc">*</span>cov_m1<span class="sc">+</span>(n2<span class="dv">-1</span>)<span class="sc">*</span>cov_m2)<span class="sc">/</span>(n1<span class="sc">+</span>n2<span class="dv">-2</span>)</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>s_gab</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             IQ_negeri rata_negeri
+IQ_negeri   196.662550   -8.343759
+rata_negeri  -8.343759  156.768868</code></pre>
+</div>
+</div>
+</section>
+<section id="uji-t2-hotelling-dua-populasi-sampel-saling-bebas-ragam-sama" class="level2">
+<h2 class="anchored" data-anchor-id="uji-t2-hotelling-dua-populasi-sampel-saling-bebas-ragam-sama"><strong>Uji T2 Hotelling Dua Populasi Sampel S</strong>aling Bebas Ragam Sama</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Hotelling)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: corpcor</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>t2_homogen <span class="ot">=</span> <span class="fu">hotelling.test</span>(data_iq,data_rata,<span class="at">var.equal=</span><span class="cn">TRUE</span>)</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>t2_homogen</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Test stat:  86.327 
+Numerator df:  2 
+Denominator df:  37 
+P-value:  2.996e-10 </code></pre>
+</div>
+</div>
+</section>
+<section id="selang-kepercayaan-simultan-1" class="level2">
+<h2 class="anchored" data-anchor-id="selang-kepercayaan-simultan-1"><strong>Selang Kepercayaan Simultan</strong></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>T.ci <span class="ot">=</span> <span class="cf">function</span>(mu1, mu2, S_gab, n1, n2, <span class="at">avec=</span><span class="fu">rep</span>(<span class="dv">1</span>,<span class="fu">length</span>(mu)), <span class="at">level=</span><span class="fl">0.95</span>){</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>p <span class="ot">=</span> <span class="fu">length</span>(mu1)</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">=</span> mu1<span class="sc">-</span>mu2</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>cval <span class="ot">=</span> <span class="fu">qf</span>(level, p, n1<span class="sc">+</span>n2<span class="sc">-</span>p<span class="dv">-1</span>) <span class="sc">*</span> p <span class="sc">*</span> (n1<span class="sc">+</span>n2<span class="dv">-2</span>) <span class="sc">/</span> (n1<span class="sc">+</span>n2<span class="sc">-</span>p<span class="dv">-1</span>)</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>zhat <span class="ot">=</span> <span class="fu">crossprod</span>(avec, mu)</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>zvar <span class="ot">=</span> <span class="fu">crossprod</span>(avec, S_gab <span class="sc">%*%</span> avec)<span class="sc">*</span> (<span class="dv">1</span><span class="sc">/</span>n1<span class="sc">+</span><span class="dv">1</span><span class="sc">/</span>n2)</span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>const <span class="ot">=</span> <span class="fu">sqrt</span>(cval <span class="sc">*</span> zvar)</span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="at">lower =</span> zhat <span class="sc">-</span> const, <span class="at">upper =</span> zhat <span class="sc">+</span> const)</span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co">#IQ</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">T.ci</span>(xbar1, xbar2, s_gab, n1,n2, <span class="at">avec=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">0</span>),<span class="at">level=</span><span class="fl">0.95</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   lower    upper 
+26.73490 49.65766 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co">#RATA</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">T.ci</span>(xbar1, xbar2, s_gab, n1,n2, <span class="at">avec=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>),<span class="at">level=</span><span class="fl">0.95</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    lower     upper 
+ 1.927118 22.393262 </code></pre>
+</div>
+</div>
+</section>
+<section id="selang-kepercayaan-bonferroni-1" class="level2">
+<h2 class="anchored" data-anchor-id="selang-kepercayaan-bonferroni-1"><strong>Selang Kepercayaan Bonferroni</strong></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>bon <span class="ot">=</span> <span class="cf">function</span>(mu1, mu2 ,S, n1, n2, alpha, k){</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a> p <span class="ot">=</span> <span class="fu">length</span>(mu1)</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a> mu <span class="ot">=</span> mu1<span class="sc">-</span>mu2</span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a> lower <span class="ot">=</span> mu[k] <span class="sc">-</span> <span class="fu">sqrt</span>((S[k,k]) <span class="sc">*</span>(<span class="dv">1</span><span class="sc">/</span>n1<span class="sc">+</span><span class="dv">1</span><span class="sc">/</span>n2))<span class="sc">*</span> <span class="fu">abs</span>(<span class="fu">qt</span>(alpha<span class="sc">/</span>(<span class="dv">2</span><span class="sc">*</span>p), <span class="at">df=</span>n1<span class="sc">+</span>n2<span class="dv">-2</span>))</span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a> upper <span class="ot">=</span> mu[k] <span class="sc">+</span> <span class="fu">sqrt</span>((S[k,k]) <span class="sc">*</span>(<span class="dv">1</span><span class="sc">/</span>n1<span class="sc">+</span><span class="dv">1</span><span class="sc">/</span>n2))<span class="sc">*</span> <span class="fu">abs</span>(<span class="fu">qt</span>(alpha<span class="sc">/</span>(<span class="dv">2</span><span class="sc">*</span>p), <span class="at">df=</span>n1<span class="sc">+</span>n2<span class="dv">-2</span>))</span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a> ci <span class="ot">=</span> <span class="fu">c</span>(<span class="at">lower =</span> lower,<span class="at">upper =</span> upper)</span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a> <span class="fu">names</span>(ci)<span class="ot">=</span> <span class="fu">c</span>(<span class="st">"lower"</span>,<span class="st">"upper"</span>)</span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a> ci</span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co">#IQ</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="fu">bon</span>(xbar1, xbar2, s_gab, n1, n2,<span class="fl">0.05</span>,<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   lower    upper 
+27.84701 48.54555 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co">#RATA</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="fu">bon</span>(xbar1, xbar2, s_gab, n1, n2,<span class="fl">0.05</span>,<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    lower     upper 
+ 2.920043 21.400336 </code></pre>
+</div>
+</div>
+</section>
+<section id="kesimpulan-1" class="level2">
+<h2 class="anchored" data-anchor-id="kesimpulan-1">Kesimpulan</h2>
+<p>Berdasarkan uji T2 Hotelling dua populasi dengan nilai tengah bebas dan dan ragam sama. Diperoleh kesimpulan bahwa</p>
+<ol type="1">
+<li>Nilai IQ dari siswa negeri dan swasta berbeda signifikan</li>
+<li>Nilai Rata-rata nilai dari siswa negeri dan swasta berbeda signifikan</li>
+</ol>
+</section>
+</section>
+<section id="perbandingan-dua-vektor-nilai-tengah-sampel-saling-bebas-ragam-tidak-sama" class="level1">
+<h1><strong>4. Perbandingan Dua Vektor Nilai Tengah Sampel Saling Bebas Ragam Tidak Sama</strong></h1>
+<section id="input-data" class="level2">
+<h2 class="anchored" data-anchor-id="input-data"><strong>Input Data</strong></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Memisahkan Data dari Populasi 1 dan 2</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>data_iq <span class="ot">=</span> data2[,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]</span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>data_rata <span class="ot">=</span> data2[,<span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="menghitung-vektor-rataan-dan-matriks-covarians-2" class="level2">
+<h2 class="anchored" data-anchor-id="menghitung-vektor-rataan-dan-matriks-covarians-2"><strong>Menghitung vektor rataan dan matriks covarians</strong></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>xbar1 <span class="ot">=</span> <span class="fu">apply</span>(data_iq, <span class="dv">2</span>, mean)</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>xbar1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  IQ_negeri rata_negeri 
+  122.24194    90.79712 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>xbar2 <span class="ot">=</span> <span class="fu">apply</span>(data_rata, <span class="dv">2</span>, mean)</span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>xbar2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  IQ_swasta rata_swasta 
+   84.04566    78.63693 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>cov_m1 <span class="ot">=</span> <span class="fu">cov</span>(data_iq)</span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>cov_m1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            IQ_negeri rata_negeri
+IQ_negeri   222.00386   -71.74954
+rata_negeri -71.74954   160.62174</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>cov_m2 <span class="ot">=</span> <span class="fu">cov</span>(data_rata)</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>cov_m2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            IQ_swasta rata_swasta
+IQ_swasta   171.32124    55.06202
+rata_swasta  55.06202   152.91599</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>n1 <span class="ot">=</span> <span class="fu">nrow</span>(data_iq)</span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>n2 <span class="ot">=</span> <span class="fu">nrow</span>(data_rata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="uji-t2-hotelling-dua-populasi-sampel-saling-bebas-ragam-sama-1" class="level2">
+<h2 class="anchored" data-anchor-id="uji-t2-hotelling-dua-populasi-sampel-saling-bebas-ragam-sama-1"><strong>Uji T2 Hotelling Dua Populasi Sampel S</strong>aling Bebas Ragam Sama</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Hotelling)</span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>t2_not_homogen <span class="ot">=</span> <span class="fu">hotelling.test</span>(data_iq,data_rata,<span class="at">var.equal=</span><span class="cn">FALSE</span>)</span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a>t2_not_homogen</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Test stat:  86.327 
+Numerator df:  2 
+Denominator df:  36.1658503108545 
+P-value:  3.685e-10 </code></pre>
+</div>
+</div>
+</section>
+<section id="selang-kepercayaan-simultan-2" class="level2">
+<h2 class="anchored" data-anchor-id="selang-kepercayaan-simultan-2"><strong>Selang Kepercayaan Simultan</strong></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>T.ci <span class="ot">=</span> <span class="cf">function</span>(mu1, mu2, S1, S2, n1, n2, <span class="at">avec=</span><span class="fu">rep</span>(<span class="dv">1</span>,<span class="fu">length</span>(mu)), <span class="at">level=</span><span class="fl">0.95</span>){</span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>p <span class="ot">=</span> <span class="fu">length</span>(mu1)</span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">=</span> mu1<span class="sc">-</span>mu2</span>
+<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a>cval <span class="ot">=</span> <span class="fu">qchisq</span>(level, p)</span>
+<span id="cb65-5"><a href="#cb65-5" aria-hidden="true" tabindex="-1"></a>zhat <span class="ot">=</span> <span class="fu">crossprod</span>(avec, mu)</span>
+<span id="cb65-6"><a href="#cb65-6" aria-hidden="true" tabindex="-1"></a>zvar <span class="ot">=</span> <span class="fu">crossprod</span>(avec, S1 <span class="sc">%*%</span> avec)<span class="sc">/</span>n1 <span class="sc">+</span> <span class="fu">crossprod</span>(avec, S2 <span class="sc">%*%</span> avec)<span class="sc">/</span>n2</span>
+<span id="cb65-7"><a href="#cb65-7" aria-hidden="true" tabindex="-1"></a>const <span class="ot">=</span> <span class="fu">sqrt</span>(cval <span class="sc">*</span> zvar)</span>
+<span id="cb65-8"><a href="#cb65-8" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="at">lower =</span> zhat <span class="sc">-</span> const, <span class="at">upper =</span> zhat <span class="sc">+</span> const)</span>
+<span id="cb65-9"><a href="#cb65-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb65-10"><a href="#cb65-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-11"><a href="#cb65-11" aria-hidden="true" tabindex="-1"></a><span class="co">#RATA</span></span>
+<span id="cb65-12"><a href="#cb65-12" aria-hidden="true" tabindex="-1"></a><span class="fu">T.ci</span>(xbar1, xbar2, cov_m1, cov_m2, n1,n2, <span class="at">avec=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">0</span>),<span class="at">level=</span><span class="fl">0.95</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   lower    upper 
+27.34134 49.05122 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="co">#RATA</span></span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a><span class="fu">T.ci</span>(xbar1, xbar2, cov_m1, cov_m2, n1,n2, <span class="at">avec=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">0</span>),<span class="at">level=</span><span class="fl">0.95</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   lower    upper 
+27.34134 49.05122 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="co">#IQ</span></span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a><span class="fu">T.ci</span>(xbar1, xbar2, cov_m1, cov_m2, n1,n2, <span class="at">avec=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>),<span class="at">level=</span><span class="fl">0.95</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    lower     upper 
+ 2.468569 21.851810 </code></pre>
+</div>
+</div>
+</section>
+<section id="kesimpulan-2" class="level2">
+<h2 class="anchored" data-anchor-id="kesimpulan-2">Kesimpulan</h2>
+<p>Berdasarkan uji T2 Hotelling dua populasi dengan nilai tengah bebas dan dan ragam tidak sama. Diperoleh kesimpulan bahwa</p>
+<ol type="1">
+<li>Nilai IQ dari siswa negeri dan swasta berbeda signifikan</li>
+<li>Nilai Rata-rata nilai dari siswa negeri dan swasta berbeda signifikan</li>
+</ol>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
