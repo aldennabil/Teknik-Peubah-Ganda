@@ -1,0 +1,173 @@
+---
+title: "Latihan 11 - LDA Penerimaan Mahasiswa"
+author: "Aldennabil"
+date: "2025-11-16"
+output: html_document
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+# 1. Import Data
+
+Dataset ini menyajikan skenario sederhana penerimaan mahasiswa (atau
+bisa juga lamaran kerja). Terdapat 6 orang kandidat yang datanya
+digunakan. Sebuah institusi (misalnya universitas) ingin
+mengklasifikasikan kandidat ke dalam dua kelompok, "Diterima" atau
+"Ditolak", berdasarkan dua kriteria akademik.
+
+-   **Rata_Nilai (**$x_1$): Ini adalah variabel prediktor pertama. Angka
+    ini mewakili nilai rata-rata kumulatif atau IPK kandidat dari
+    sekolah sebelumnya.
+
+-   **Skor_Tes (**$x_2$): Ini adalah variabel prediktor kedua. Angka ini
+    mewakili skor yang diperoleh kandidat pada tes masuk atau ujian
+    standarisasi yang disyaratkan.
+
+-   **Status (Class):** Ini adalah variabel kategori (atau kelas) yang
+    ingin kita prediksi. Variabel ini memiliki dua nilai: "Diterima"
+    (kandidat lolos seleksi) dan "Ditolak" (kandidat tidak lolos
+    seleksi).
+
+```{r}
+Rata_Nilai <- c(85, 92, 88, 78, 70, 80)
+Skor_Tes <- c(90, 81, 88, 70, 80, 72)
+Status <- c("Diterima", "Diterima", "Diterima", "Ditolak", "Ditolak", "Ditolak")
+data <- data.frame(Rata_Nilai, Skor_Tes, Status)
+data$Status <- as.factor(data$Status)
+data
+```
+
+# 2. Pisahkan Data per Kelompok
+
+```{r}
+ditolak <- subset(data, Status=="Ditolak")[,1:2]
+diterima <- subset(data, Status=="Diterima")[,1:2]
+```
+
+# 3. Hitung Mean per Kelompok
+
+```{r}
+mean_ditolak <- colMeans(ditolak)
+mean_diterima <- colMeans(diterima)
+mean_ditolak; mean_diterima
+```
+
+# 4. Hitung Covariance Masing-masing Kelompok
+
+```{r}
+S_ditolak <- cov(ditolak)
+S_diterima <- cov(diterima)
+S_ditolak; S_diterima
+```
+
+# 5. Hitung Covariance Pooled
+
+```{r}
+n1 <- nrow(ditolak)
+n2 <- nrow(diterima)
+S_pooled <- ((n1-1)*S_ditolak + (n2-1)*S_diterima) / (n1+n2-2)
+S_pooled
+```
+
+# 6. Invers Covariance
+
+```{r}
+S_inv <- solve(S_pooled)
+S_inv
+```
+
+# 7. Hitung Koefisien a (Fisher LDA)
+
+```{r}
+a <- S_inv %*% (mean_ditolak - mean_diterima)
+a
+```
+
+# 8. Hitung Nilai h (Cutoff)
+
+```{r}
+h <- 0.5 * t(a) %*% (mean_ditolak + mean_diterima)
+h
+```
+
+# 9. Hitung Skor Fisher
+
+```{r}
+X <- as.matrix(data[,1:2]) # Hanya 2 variabel
+data$score <- X %*% a
+head(data)
+```
+
+# 10. Klasifikasi
+
+Aturan: Jika score \>= h, prediksi "Ditolak" (Grup 1)
+
+Jika score \< h, prediksi "Diterima" (Grup 2)
+
+```{r}
+h_numeric <- as.numeric(h)
+data$pred_manual <- ifelse(data$score >= h_numeric, "Ditolak", "Diterima")
+```
+
+# 11. Confusion Matrix (Manual)
+
+```{r}
+table(Actual=data$Status, Pred=data$pred_manual)
+```
+
+# 12. Error Rate
+
+```{r}
+cm <- table(Actual=data$Status, Pred=data$pred_manual)
+cm
+```
+
+Dengan data sekecil ini (N=6), model biasanya akan overfit dan memiliki
+akurasi 100% pada data training.
+
+# 13. LDA Menggunakan Library MASS
+
+```{r}
+library(MASS)
+# Set Ditolak sebagai referensi (Grup 1) agar konsisten
+data$Status <- relevel(data$Status, ref = "Ditolak")
+model <- lda(Status ~ Rata_Nilai + Skor_Tes, data=data)
+model
+```
+
+# 14. Prediksi Library MASS
+
+```{r}
+pred <- predict(model)$class
+table(Actual=data$Status, Pred=pred)
+```
+
+# 15. Fungsi Diskriminan per Kelas (Ditolak & Diterima)
+
+```{r}
+# Mean masing-masing kelas
+mu_ditolak <- as.numeric(model$means["Ditolak", ])
+mu_diterima <- as.numeric(model$means["Diterima", ])
+
+# Koefisien per kelas: b_k = S_inv %*% mu_k
+b_ditolak <- S_inv %*% mu_ditolak
+b_diterima <- S_inv %*% mu_diterima
+
+# Konstanta per kelas: c_k = -1/2 * mu' * S_inv * mu + log(prior)
+prior <- model$prior
+c_ditolak <- -0.5 * t(mu_ditolak) %*% S_inv %*% mu_ditolak + log(prior["Ditolak"])
+c_diterima <- -0.5 * t(mu_diterima) %*% S_inv %*% mu_diterima + log(prior["Diterima"])
+```
+
+```{r}
+# Tampilkan fungsi Diterima
+a_diterima <- c(c_diterima, b_diterima)
+a_diterima
+```
+
+```{r}
+# Tampilkan fungsi Ditolak
+a_ditolak <- c(c_ditolak, b_ditolak)
+a_ditolak
+```

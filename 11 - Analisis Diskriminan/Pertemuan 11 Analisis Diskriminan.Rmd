@@ -1,0 +1,308 @@
+---
+title: "Pertemuan 11 Analisis Diskriminan - Analisis Peubah Ganda"
+author: "Aldennabil"
+date: "2025-11-16"
+output: html_document
+---
+
+# PENDAHULUAN
+
+Analisis Diskriminan (Discriminant Analysis) → digunakan untuk mengklasifikasikan individu/objek ke dalam kelompok yang sudah diketahui labelnya, berdasarkan kombinasi variabel prediktor.
+
+**Tujuan Pembelajaran**
+
+Memahami konsep dan aplikasi analisis diskriminan
+
+# ANALISIS DISKRIMINAN
+
+**Konsep Dasar**
+
+Analisis diskriminan digunakan untuk:
+
+-   Mengklasifikasikan objek ke dalam kelompok yang telah ditentukan (misal: “Good” vs “Bad”)
+
+-   Membangun fungsi matematis untuk membedakan kelompok
+
+-   Mengidentifikasi variabel mana yang paling berperan dalam pemisahan kelompok
+
+-   Prediksi status objek baru berdasarkan nilai variabel bebas
+
+# **STUDI KASUS**
+
+Sebuah perusahaan penjualan mobil meminta Anda untuk membantu membuatkan model yang dapat dijadikan sebagai acuan dalam penerimaan calon pembeli kredit. Penyusunan model didasarkan pada data karakteristik pembeli dengan status kelancaran pembayaran kreditnya yang telah lunas pada setahun terakhir. Karakteristik pembeli meliputi usia (tahun), pendapatan (juta rupiah), dan jumlah tanggungan dalam keluarga. Status kelancaran pembayaran dikategorikan menjadi dua, yaitu *bad* dan *good*. *Good*  jika pembayaran kreditnya tergolong lancar dan *Bad* jika tidak lancar.
+
+a.     Bagaimana model yang terbentuk?
+
+b.     Bagaimana aturan klasifikasinya untuk mengklasifikasikan calon pembeli apakah calon pembeli tersebut akan menjadi penerima kredit yang *bad* atau *good*?
+
+c.     Berapa besarnya kesalahan klasifikasi dari model yang terbentuk?
+
+# 1. Import Data
+
+```{r}
+library(readxl)
+library(dplyr)
+data <- read_excel("Data Diskriminan contoh.xlsx")
+data <- data %>% mutate(Status = as.factor(Status))
+head(data)
+```
+
+# 2. Pisahkan Data per Kelompok
+
+```{r}
+bad <- subset(data, Status=="Bad")[,1:3]
+good <- subset(data, Status=="Good")[,1:3]
+```
+
+# 3. Hitung Mean per Kelompok
+
+```{r}
+mean_bad <- colMeans(bad)
+mean_good <- colMeans(good)
+mean_bad; mean_good
+```
+
+# 4. Hitung Covariance Masing-masing Kelompok
+
+```{r}
+S_bad <- cov(bad)
+S_good <- cov(good)
+S_bad; S_good
+```
+
+# 5. Hitung Covariance Pooled
+
+```{r}
+n1 <- nrow(bad)
+n2 <- nrow(good)
+S_pooled <- ((n1-1)*S_bad + (n2-1)*S_good) / (n1+n2-2)
+S_pooled
+```
+
+# 6. Invers Covariance
+
+```{r}
+S_inv <- solve(S_pooled)
+S_inv
+```
+
+# 7. Hitung Koefisien a (Fisher LDA)
+
+```{r}
+a <- S_inv %*% (mean_bad - mean_good)
+a
+```
+
+# 8. Hitung Nilai h
+
+```{r}
+h <- 0.5 * t(a) %*% (mean_bad + mean_good)
+h
+```
+
+# 9. Hitung Skor Fisher
+
+```{r}
+X <- as.matrix(data[,1:3])
+# Typo diperbaiki: data$score <- X %*% a (bukan ... %*% ahead(data))
+data$score <- X %*% a
+head(data)
+```
+
+# 10. Klasifikasi
+
+```{r}
+h <- as.numeric(h)
+data$pred_manual <- ifelse(data$score >= h, "Bad", "Good")
+```
+
+# 11. Confusion Matrix
+
+```{r}
+table(Actual=data$Status, Pred=data$pred_manual)
+```
+
+# 12. Error Rate
+
+```{r}
+cm <- table(Actual=data$Status, Pred=data$pred_manual)
+cm
+
+# Error Bad = Bad predicted as Good
+cm["Bad","Good"]
+err_bad <- cm["Bad","Good"] / sum(data$Status=="Bad")
+
+# Error Good = Good predicted as Bad
+cm["Good","Bad"]
+err_good <- cm["Good","Bad"] / sum(data$Status=="Good")
+
+err_bad; err_good
+```
+
+# 13. LDA Menggunakan Library MASS
+
+```{r}
+library(MASS)
+model <- lda(Status ~ tanggungan + pendapatan + Usia, data=data)
+model
+```
+
+# 14. Prediksi Library MASS
+
+```{r}
+pred <- predict(model)$class
+table(Actual=data$Status, Pred=pred)
+```
+
+# 15. Fungsi Diskriminan per Kelas (Bad & Good)
+
+```{r}
+# Mean masing-masing kelas
+mu_bad <- as.numeric(model$means["Bad", ])
+mu_good <- as.numeric(model$means["Good", ])
+
+# Koefisien per kelas: b_k = S_inv %*% mu_k
+b_bad <- S_inv %*% mu_bad
+b_good <- S_inv %*% mu_good
+
+# Konstanta per kelas: c_k = -1/2 * mu' * S_inv * mu + log(prior)
+prior <- model$prior
+c_bad <- -0.5 * t(mu_bad) %*% S_inv %*% mu_bad + log(prior["Bad"])
+c_good <- -0.5 * t(mu_good) %*% S_inv %*% mu_good + log(prior["Good"])
+
+# Tampilkan fungsi Bad
+a_bad <- c(c_bad, b_bad)
+a_bad
+
+# Tampilkan fungsi Good
+a_good <- c(c_good, b_good)
+a_good
+```
+
+# Latihan Dataset Wine
+
+(Package R rattle) ini berisi hasil analisis kimia anggur yang tumbuh di daerah tertentu di Italia. Tiga jenis anggur direpresentasikan dalam 178 sampel, dengan hasil dari 13 analisis kimia yang dicatat untuk setiap sampel. Peubah Type telah diubah menjadi peubah kategorik.
+
+```{r}
+library(MASS)
+library(dplyr)
+library(rattle)
+# Gunakan data wine
+data(wine)
+wine
+```
+
+```{r}
+# Target variabel: Type
+# Prediktor: semua kolom selain Type
+wine$Type <- as.factor(wine$Type)
+
+# Pisahkan prediktor dan target
+x <- wine[, -1]
+y <- wine$Type
+y
+```
+
+# 2. Pisahkan Data per Kelompok
+
+```{r}
+# (Menggunakan variabel 'wine' yang sudah Anda siapkan)
+# -1 berarti semua kolom KECUALI 'Type' (kolom 1)
+type1 <- subset(wine, Type=="1")[, -1]
+type2 <- subset(wine, Type=="2")[, -1]
+type3 <- subset(wine, Type=="3")[, -1]
+```
+
+# 3. Hitung Mean per Kelompok
+
+```{r}
+mean_type1 <- colMeans(type1)
+mean_type2 <- colMeans(type2)
+mean_type3 <- colMeans(type3)
+mean_type1; mean_type2; mean_type3
+```
+
+# 4. Hitung Covariance Masing-masing Kelompok
+
+```{r}
+S_type1 <- cov(type1)
+S_type2 <- cov(type2)
+S_type3 <- cov(type3)
+# S_type1; S_type2; S_type3 (Output matriks 13x13, besar)
+```
+
+# 5. Hitung Covariance Pooled
+
+```{r}
+n1 <- nrow(type1)
+n2 <- nrow(type2)
+n3 <- nrow(type3)
+
+# Rumus S_pooled untuk 3 kelas (k=3)
+S_pooled <- ((n1-1)*S_type1 + (n2-1)*S_type2 + (n3-1)*S_type3) / (n1+n2+n3-3)
+# S_pooled
+```
+
+# 6. Invers Covariance
+
+```{r}
+S_inv <- solve(S_pooled)
+S_inv
+```
+
+# 7. LDA Menggunakan Library MASS
+
+```{r}
+model <- lda(Type ~ ., data=wine)
+model
+```
+
+# 8. Prediksi Library MASS (Menggantikan L.11 & 12)
+
+```{r}
+pred <- predict(model)$class
+cm <- table(Actual=wine$Type, Pred=pred)
+cm
+
+# Hitung Akurasi (1 - Error Rate Total)
+accuracy <- sum(diag(cm)) / sum(cm)
+accuracy
+```
+
+# 9. Fungsi Diskriminan per Kelas (Metode Manual Multi-Kelas)
+
+```{r}
+# Mean masing-masing kelas
+mu_type1 <- as.numeric(model$means["1", ])
+mu_type2 <- as.numeric(model$means["2", ])
+mu_type3 <- as.numeric(model$means["3", ])
+
+# Koefisien per kelas: b_k = S_inv %*% mu_k
+b_type1 <- S_inv %*% mu_type1
+b_type2 <- S_inv %*% mu_type2
+b_type3 <- S_inv %*% mu_type3
+
+# Konstanta per kelas: c_k = -1/2 * mu' * S_inv * mu + log(prior)
+prior <- model$prior
+c_type1 <- -0.5 * t(mu_type1) %*% S_inv %*% mu_type1 + log(prior["1"])
+c_type2 <- -0.5 * t(mu_type2) %*% S_inv %*% mu_type2 + log(prior["2"])
+c_type3 <- -0.5 * t(mu_type3) %*% S_inv %*% mu_type3 + log(prior["3"])
+```
+
+```{r}
+# Tampilkan fungsi Tipe 1
+a_type1 <- c(c_type1, b_type1)
+a_type1
+```
+
+```{r}
+# Tampilkan fungsi Tipe 2
+a_type2 <- c(c_type2, b_type2)
+a_type2
+```
+
+```{r}
+# Tampilkan fungsi Tipe 3
+a_type3 <- c(c_type3, b_type3)
+a_type3
+```
